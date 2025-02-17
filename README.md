@@ -1,1 +1,1 @@
-# Appli-de-GabonEvent
+# Equipe du Chef APPli de Gest-Event
