@@ -1,0 +1,65 @@
+import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
+
+const router = Router();
+const prisma = new PrismaClient();
+
+// Créer un utilisateur
+router.post('/users', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await prisma.user.create({
+            data: { email, password },
+        });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors de la création de l'utilisateur" });
+    }
+});
+
+// Obtenir tous les événements
+router.get('/events', async (req, res) => {
+    const events = await prisma.event.findMany();
+    res.json(events);
+});
+
+// Créer un événement
+router.post('/events', async (req, res) => {
+    const { name, description, placesAvailable, organizerId } = req.body;
+    try {
+        const event = await prisma.event.create({
+            data: { name, description, placesAvailable, organizerId },
+        });
+        res.json(event);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors de la création de l'événement" });
+    }
+});
+
+// S'inscrire à un événement
+router.post('/registrations', async (req, res) => {
+    const { userId, eventId } = req.body;
+    try {
+        const registration = await prisma.registration.create({
+            data: { userId, eventId },
+        });
+        res.json(registration);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors de l'inscription à l'événement" });
+    }
+});
+
+// Effectuer un paiement
+router.post('/payments', async (req, res) => {
+    const { userId, amount } = req.body;
+    try {
+        const payment = await prisma.payment.create({
+            data: { userId, amount },
+        });
+        res.json(payment);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors du paiement" });
+    }
+});
+
+export default router;
