@@ -1,1 +1,1 @@
-# Equipe du Chef APli de Gest-Event
+# Application de Gest-Event
